@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Random;
+
 import javax.swing.JOptionPane;
 
 import com.sobte.cqp.jcq.entity.Anonymous;
@@ -43,18 +45,18 @@ public class Demo extends JcqAppAbstract implements ICQVer, IMsg, IRequest {
         // 开始模拟发送消息
         // 模拟私聊消息
         // 开始模拟QQ用户发送消息，以下QQ全部编造，请勿添加
-        demo.privateMsg(0, 10001, 2234567819L, "小姐姐约吗", 0);
-        demo.privateMsg(0, 10002, 2222222224L, "喵呜喵呜喵呜", 0);
-        demo.privateMsg(0, 10003, 2111111334L, "可以给我你的微信吗", 0);
-        demo.privateMsg(0, 10004, 3111111114L, "今天天气真好", 0);
-        demo.privateMsg(0, 10005, 3333333334L, "你好坏，都不理我QAQ", 0);
+        //demo.privateMsg(0, 10001, 2234567819L, "菜单", 0);
+        //demo.privateMsg(0, 10002, 2222222224L, "喵呜喵呜喵呜", 0);
+        //demo.privateMsg(0, 10003, 2111111334L, "可以给我你的微信吗", 0);
+        //demo.privateMsg(0, 10004, 3111111114L, "今天天气真好", 0);
+        //demo.privateMsg(0, 10005, 3333333334L, "你好坏，都不理我QAQ", 0);
         // 模拟群聊消息
         // 开始模拟群聊消息
-        demo.groupMsg(0, 10006, 3456789012L, 3333333334L, "", "菜单", 0);
-        demo.groupMsg(0, 10008, 3456789012L, 11111111114L, "", "小喵呢，出来玩玩呀", 0);
-        demo.groupMsg(0, 10009, 427984429L, 3333333334L, "", "[CQ:at,qq=2222222224] 来一起玩游戏，开车开车", 0);
-        demo.groupMsg(0, 10010, 427984429L, 3333333334L, "", "好久不见啦 [CQ:at,qq=11111111114]", 0);
-        demo.groupMsg(0, 10011, 427984429L, 11111111114L, "", "qwq 有没有一起开的\n[CQ:at,qq=3333333334]你玩嘛", 0);
+        //demo.groupMsg(0, 10006, 3456789012L, 3333333334L, "", "菜单", 0);
+        demo.groupMsg(0, 10008, 806274465L, 11111111114L, "", "鸡哥呢，出来玩玩呀", 0);
+        //demo.groupMsg(0, 10009, 427984429L, 3333333334L, "", "[CQ:at,qq=2222222224] 来一起玩游戏，开车开车", 0);
+        demo.groupMsg(0, 10010, 806274465L, 3333333334L, "", "好久不见啦 [CQ:at,qq=11111111114]", 0);
+        //demo.groupMsg(0, 10011, 427984429L, 11111111114L, "", "qwq 有没有一起开的\n[CQ:at,qq=3333333334]你玩嘛", 0);
         // ......
         // 依次类推，可以根据实际情况修改参数，和方法测试效果
         // 以下是收尾触发函数
@@ -149,7 +151,10 @@ public class Demo extends JcqAppAbstract implements ICQVer, IMsg, IRequest {
     public int privateMsg(int subType, int msgId, long fromQQ, String msg, int font) {
         // 这里处理消息
         //CQ.sendPrivateMsg(fromQQ, "你发送了这样的消息：" + msg + "\n来自Java插件");
-    	CQ.sendPrivateMsg(fromQQ, test);
+    	
+    	StringProcess sp=new StringProcess(fromQQ,msg);
+    	msg=sp.slove();
+    	CQ.sendPrivateMsg(fromQQ, msg);
         return MSG_IGNORE;
     }
 
@@ -185,7 +190,22 @@ public class Demo extends JcqAppAbstract implements ICQVer, IMsg, IRequest {
         //List<CQImage> images = CC.getCQImages(msg);// 此方法为获取消息中所有的CQ图片数据，错误时打印异常到控制台，返回 已解析的数据
 
         // 这里处理消息
-        CQ.sendGroupMsg(fromGroup, CC.at(fromQQ) + "你发送了这样的消息：" + msg + "\n来自Java插件");
+        //CQ.sendGroupMsg(fromGroup, CC.at(fromQQ) + "你发送了这样的消息：" + msg + "\n来自Java插件");
+        if(fromGroup==806274465) {
+        	//rand.nextInt(100);
+        	 if(msg.indexOf("土鸡哥哥")!=-1) {
+        		 CQ.sendGroupMsg(fromGroup, CC.at(fromQQ) + "是土鸡第弟吧");
+        	 }else if(msg.indexOf("鸡哥")!=-1) {
+        		 CQ.sendGroupMsg(fromGroup, CC.at(fromQQ) + "是鸡弟吧！");
+        	 }else {
+        		 Random rand = new Random();
+        		 int ji=rand.nextInt(100);
+        		 if(ji>=93) {
+        			 CQ.sendGroupMsg(fromGroup,  msg );
+        		 }
+        		 
+        	 }
+        }
         return MSG_IGNORE;
     }
 

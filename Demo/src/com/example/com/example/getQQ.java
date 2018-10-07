@@ -3,7 +3,9 @@ package com.example;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+//读取指令（demo）---处理指令(stringprocess)--传到制定程序(制定类)--不涉及本地存档直接返回
+//									-涉及测检测是否存在QQ----存在则直接读取/输出
+//									-不存在则返回须要注册
 public class getQQ {
 	public static String [] getFileName(String path)
     {
